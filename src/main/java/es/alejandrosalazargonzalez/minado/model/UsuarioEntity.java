@@ -1,4 +1,3 @@
-
 package es.alejandrosalazargonzalez.minado.model;
 
 import java.util.Objects;
@@ -11,8 +10,9 @@ public class UsuarioEntity {
 
     private String usuario;
     private String email;
-    private String nombre;
     private String contrasenia;
+    private int puntos;
+    private int idNivel;
 
     /**
      * Constructor vacio
@@ -25,18 +25,20 @@ public class UsuarioEntity {
      *
      * @param usuario     del usuario
      * @param email       del usuario
-     * @param nombre      del usuario
      * @param contrasenia del usuario
+     * @param puntos      del usuario
+     * @param nivel       del usuario
      * @throws Exception
      */
-    public UsuarioEntity(String usuario, String email, String nombre, String contrasenia) throws ExceptionInInitializerError{
+    public UsuarioEntity(String usuario, String email, String contrasenia) throws ExceptionInInitializerError{
         if (!email.contains("@") || !email.contains(".") ) {
             throw new ExceptionInInitializerError("El email debe tener un formato correcto");
         }
         this.usuario = usuario;
         this.email = email;
-        this.nombre = nombre;
         this.contrasenia = contrasenia;
+        this.puntos = 0;
+        this.idNivel = 1;
     }
 
     //Getters y Setters
@@ -59,20 +61,28 @@ public class UsuarioEntity {
         this.email = email;
     }
 
-    public String getNombre() {
-        return this.nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getContrasenia() {
         return this.contrasenia;
     }
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public int getNivel(){
+        return this.idNivel;
+    }
+
+    public void setNivel(int nivel){
+        this.idNivel = nivel;
+    }
+
+    public int getPuntos(){
+        return this.puntos;
+    }
+
+    public void setPuntos(int puntos){
+        this.puntos = puntos;
     }
 
     @Override
@@ -93,11 +103,10 @@ public class UsuarioEntity {
 
     @Override
     public String toString() {
-        return "{" + "usuario" + getUsuario() +
-                ", email=" + getEmail() +
-                ", nombre=" + getNombre() +
-                ", contrasenia=" + getContrasenia() +
-                "}";
+        return getUsuario() +
+                ", " + getEmail() +
+                ", " + getPuntos() +
+                ", " + getNivel();
     }
 
 }

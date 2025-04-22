@@ -1,133 +1,72 @@
 package es.alejandrosalazargonzalez.minado.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import es.alejandrosalazargonzalez.minado.config.ConfigManager;
 import es.alejandrosalazargonzalez.minado.controller.abstractas.AbstractController;
 import es.alejandrosalazargonzalez.minado.model.UsuarioEntity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 /**
- * @author: alejandrosalazargonzalez
- * @version: 1.0.0
+ *   @author: alejandrosalazargonzalez
+ *   @version: 1.0.0
  */
 public class LoginController extends AbstractController {
 
-    @FXML
-    private ComboBox<String> idiomaComboBox;
-    @FXML
-    public Label iniciarText;
-    @FXML
-    public Label usuarioText;
-    @FXML
-    private TextField usuarioTextField;
-    @FXML
-    public Label contraseniaText;
-    @FXML
-    private PasswordField contraseniaTextField;
-    @FXML
-    private Text errorText;
-    @FXML
-    private Button iniciarButton;
-    @FXML
-    public Hyperlink olvidasteText;
-    @FXML
-    public Text nuevoUsuarioText;
-    @FXML
-    public Button crearCuentaButton;
-
-    @FXML
-    public void initialize() {
-        List<String> idiomas = new ArrayList<>();
-        idiomas.add("es");
-        idiomas.add("en");
-        idiomaComboBox.getItems().addAll(idiomas);
-        idiomaComboBox.setValue(cargarIdiomaActual());
-        cambiarIdiomaLogIn();
-    }
+    @FXML private Button aceptarButton;
+    @FXML private Button registrarButton;
+    @FXML private Button listarUsuarios;
+    @FXML private Button recuperarButton;
+    @FXML private TextField userEmailTextField;
+    @FXML private PasswordField passwordField;
+    @FXML private Text errorText;
 
     /**
-     * va a la pantalla de posts despues de comprobar que es correcto
-     *
+     * cambia a la pantalla de inicio
      */
     @FXML
-    private void buttonToPostsOnClick() {
-        if (revisarCamposLogin()) {
-            errorText.setText("¡Bienvenidos al mundo de la programación!");
-            cambiarPantalla(iniciarButton, "posts", "app-init");
-        }
-    }
-
-    /**
-     * comprueba los campos de la pagina
-     * 
-     * @return true/false
-     */
-    private boolean revisarCamposLogin() {
-        if (!comprobarTextField(usuarioTextField)) {
+    public void loginAceptarOnClick() {
+        if (!comprobarTextField(userEmailTextField)) {
             errorText.setText("Usuario no puede estar vacio");
-            return false;
+            return;
         }
-        if (!comprobarTextField(contraseniaTextField)) {
+        if (!comprobarTextField(passwordField)) {
             errorText.setText("Contraseña no puede estar vacio");
-            return false;
+            return;
         }
-        UsuarioEntity usuario = getUsuarioServiceModel().obtenerUsuarioPorUsuario(usuarioTextField.getText());
+        UsuarioEntity usuario = getUsuarioServiceModel().obtenerUsuarioPorUsuario(userEmailTextField.getText());
         if (usuario == null) {
             errorText.setText("el usuario no existe");
-            return false;
+            return;
         }
-        if (!(usuario.getContrasenia().equals(contraseniaTextField.getText()))) {
+        if (!(usuario.getContrasenia().equals(passwordField.getText()))) {
             errorText.setText("error en usuario o contraseña");
-            return false;
+            return;
         }
-        return true;
+        setUsuarioActual(usuario);
+        cambiarPantalla(aceptarButton, "inicio");
     }
 
     /**
-     * cambia a la pantalla registrar
+     * cambia a la pantalla de registrar
      */
     @FXML
-    private void logInToRegistrarOnClick() {
-        cambiarPantalla(crearCuentaButton, "registrar", "app-init");
+    protected void loginToRegistrarOnClick()  {
+        cambiarPantalla(registrarButton, "registrar");
     }
 
     @FXML
-    private void loginToRecuperarOnClick(){
-        cambiarPantalla(crearCuentaButton, getIdioma(), getIdioma());
+    public void loginToListarOnClick(){
+        cambiarPantalla(listarUsuarios, "listarUsuarios");
     }
-
     /**
-     * cambia el idioma de la web
+     * cambia a la pantalla de recuperar
      */
     @FXML
-    private void comboBoxCambiarIdioma() {
-        String idioma = idiomaComboBox.getValue().toString();
-        setIdioma(idioma);
-        cargarIdiomaActual();
-        cambiarIdiomaLogIn();
+    protected void loginToRecuperarOnClick() {
+        cambiarPantalla(recuperarButton, "recuperar");
     }
 
-    /**
-     * cambiar idioma de la pantalla login
-     */
-    public void cambiarIdiomaLogIn() {
-        iniciarText.setText(ConfigManager.ConfigProperties.getProperty("iniciarText"));
-        usuarioText.setText(ConfigManager.ConfigProperties.getProperty("usuarioText"));
-        usuarioTextField.setPromptText(ConfigManager.ConfigProperties.getProperty("usuarioTextField"));
-        contraseniaText.setText(ConfigManager.ConfigProperties.getProperty("contraseniaText"));
-        contraseniaTextField.setPromptText(ConfigManager.ConfigProperties.getProperty("contraseniaTextField"));
-        iniciarButton.setText(ConfigManager.ConfigProperties.getProperty("iniciarButton"));
-        olvidasteText.setText(ConfigManager.ConfigProperties.getProperty("olvidasteText"));
-        nuevoUsuarioText.setText(ConfigManager.ConfigProperties.getProperty("nuevoUsuarioText"));
-        crearCuentaButton.setText(ConfigManager.ConfigProperties.getProperty("crearCuentaButton"));
-    }
+    
 }

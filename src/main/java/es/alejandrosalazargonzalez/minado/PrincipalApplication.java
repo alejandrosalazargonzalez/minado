@@ -11,9 +11,8 @@ public class PrincipalApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("app-init.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 510, 900);
-        stage.setResizable(false);
-        stage.setTitle("Pantalla Princial");
+        Scene scene = new Scene(fxmlLoader.load(), 350, 500);
+        stage.setTitle("Soy tu primera app visual!");
         stage.setScene(scene);
         stage.show();
     }
