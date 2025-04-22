@@ -1,3 +1,4 @@
+
 package es.alejandrosalazargonzalez.minado.model;
 
 import java.sql.PreparedStatement;
@@ -5,12 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import es.alejandrosalazargonzalez.minado.model.abstractas.Conexion;
-
+import es.alejandrosalazargonzalez.minado.model.conexion.Conexion;
 
 /**
- *   @author: alejandrosalazargonzalez
- *   @version: 1.0.0
+ * @author alejandrosalazargonzalez
+ * @version 1.0.0
  */
 public class UsuarioServiceModel extends Conexion {
 
@@ -32,65 +32,84 @@ public class UsuarioServiceModel extends Conexion {
 
     /**
      * Saca todos los usuarios
+     * 
      * @return ArrayList<UsuarioEntity>
      * @throws SQLException
      */
     public ArrayList<UsuarioEntity> obtenerUsarios() throws SQLException {
-        String sql = "SELECT * FROM usuarios";
+        String sql = "SELECT * FROM Usuario";
         return leerSql(sql);
     }
 
     /**
      * Obtiene todos los usuarios por su email
+     * 
      * @param email del usuario
      * @return UsuarioEntity
      */
     public UsuarioEntity obtenerUsuarioPorEmail(String email) {
         try {
-            String sql = "SELECT * FROM usuarios " + "where email='"+email+"'";
-        ArrayList<UsuarioEntity> usuarios = leerSql(sql);
-        if (usuarios.isEmpty()) {
-            return null;
-        }
-        return usuarios.get(0);
+            String sql = "SELECT * FROM Usuario " + "where email='" + email + "'";
+            ArrayList<UsuarioEntity> usuarios = leerSql(sql);
+            if (usuarios.isEmpty()) {
+                return null;
+            }
+            return usuarios.get(0);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        
+
     }
 
     /**
      * Obtiene todos los usuarios por su usuario
+     * 
      * @param usuario a buscar
      * @return UsuarioEntity
      */
     public UsuarioEntity obtenerUsuarioPorUsuario(String usuario) {
         try {
-            String sql = "SELECT * FROM usuarios " + "where user='"+usuario+"'";
-        ArrayList<UsuarioEntity> usuarios = leerSql(sql);
-        if (usuarios.isEmpty()) {
-            return null;
-        }
-        return usuarios.get(0);
+            String sql = "SELECT * FROM Usuario " + "where nombreUsuario='" + usuario + "'";
+            ArrayList<UsuarioEntity> usuarios = leerSql(sql);
+            if (usuarios.isEmpty()) {
+                return null;
+            }
+            return usuarios.get(0);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        
+
     }
 
     /**
      * aniade un usuario a la base de datos
+     * 
      * @param usuario a agregar
      * @return true/false
      * @throws SQLException
      */
-    public boolean addUsuario(UsuarioEntity usuario) throws SQLException{
+    public boolean addUsuario(UsuarioEntity usuario) throws SQLException {
         if (usuario == null) {
             return false;
         }
-        String sql = "INSERT INTO usuarios (user, email, password, puntos, id_nivel) VALUES ( ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Usuario (nombreUsuario, email, nombre, contrasenia) VALUES (?, ?, ?, ?)";
+        return ejecutarUpdate(sql, usuario);
+    }
+
+    /**
+     * aniade un usuario a la base de datos
+     * 
+     * @param usuario a agregar
+     * @return true/false
+     * @throws SQLException
+     */
+    public boolean eliminarUsuario(UsuarioEntity usuario) throws SQLException {
+        if (usuario == null) {
+            return false;
+        }
+        String sql = "Delete from usuarios where ";
         return ejecutarUpdate(sql, usuario);
     }
 
@@ -108,10 +127,11 @@ public class UsuarioServiceModel extends Conexion {
             ResultSet resultado = sentencia.executeQuery();
 
             while (resultado.next()) {
-                String userStr = resultado.getString("user");
+                String usuarioStr = resultado.getString("nombreUsuario");
+                String nombreStr = resultado.getString("nombre");
+                String contraseniaStr = resultado.getString("contrasenia");
                 String emailStr = resultado.getString("email");
-                String passwordStr = resultado.getString("password");
-                UsuarioEntity usuarioModel = new UsuarioEntity(userStr,emailStr, passwordStr);
+                UsuarioEntity usuarioModel = new UsuarioEntity(usuarioStr, emailStr, nombreStr, contraseniaStr);
                 usuarios.add(usuarioModel);
             }
         } catch (Exception e) {
@@ -124,6 +144,7 @@ public class UsuarioServiceModel extends Conexion {
 
     /**
      * modifica la base de datos segun el sql insertado
+     * 
      * @param sql
      * @param usuario
      * @return
@@ -133,9 +154,8 @@ public class UsuarioServiceModel extends Conexion {
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setString(1, usuario.getUsuario());
             stmt.setString(2, usuario.getEmail());
-            stmt.setString(3, usuario.getContrasenia());
-            stmt.setInt(4, usuario.getPuntos());
-            stmt.setInt(5, usuario.getNivel());
+            stmt.setString(3, usuario.getNombre());
+            stmt.setString(4, usuario.getContrasenia());
             stmt.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -145,60 +165,15 @@ public class UsuarioServiceModel extends Conexion {
             cerrar();
         }
     }
-    
-    /**
-     * recoge una palabra de forma aleatoria de la base de datos teniendo en cuenta
-     * la dificulta escogida por el usuario
-     *
-     * @param nombreUsuario
-     * @return String
-     * @throws SQLException
-     */
-    public String obtenerPalabraAleatoriaPorUsuario(String nombreUsuario) throws SQLException {
-        String palabra = null;
-        try {
-            UsuarioEntity usuario = obtenerUsuarioPorUsuario(nombreUsuario);
-            if (usuario == null) {
-                throw new SQLException("No se encontró el usuario: " + nombreUsuario);
-            }
-            int idNivel = usuario.getNivel();
-            String sql = "SELECT palabra FROM palabras WHERE id_nivel = ? ORDER BY RANDOM() LIMIT 1";
-            try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-                stmt.setInt(1, idNivel);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        palabra = rs.getString("palabra");
-                    }
-                }
-            }
-            if (palabra == null || palabra.isEmpty()) {
-                throw new SQLException("No se encontró ninguna palabra para el nivel: " + idNivel);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            cerrar();
-        }
-        return palabra;
-    }
 
-    /**
-     * actualiza los puntos de un usuario en la base de datos.
-     *
-     * @param nombreUsuario el usuario
-     * @param nuevosPuntos los puntos a asignar
-     * @return true/false
-     * @throws SQLException
-     */
-    public void actualizarPuntosUsuario(String nombreUsuario, int nuevosPuntos) throws SQLException {
-        String sql = "UPDATE usuarios SET puntos = ? WHERE user = ?";
+    public boolean eliminar(String sql) throws SQLException{
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setInt(1, nuevosPuntos);
-            stmt.setString(2, nombreUsuario);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
+            int filas = stmt.executeUpdate(sql);
+            return filas > 0;
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
+            return false;
+        } finally{
             cerrar();
         }
     }

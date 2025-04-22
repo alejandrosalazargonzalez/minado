@@ -1,43 +1,42 @@
-package es.alejandrosalazargonzalez.minado.model;
+package es.alejandrosalazargonzalez.minado.model.conexion;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 /**
- *   @author: alejandrosalazargonzalez
- *   @version: 1.0.0
+ * @author alejandrosalazargonzalez
+ * @version 1.0.0
  */
-public class ConexionModel {
-    
+public abstract class Conexion {
+
     private String rutaArchivoBD;
     private Connection connection;
 
     /**
      * Constructor vacio
      */
-    public ConexionModel() {
-    }
+    protected Conexion(){}
 
     /**
-     * constructor con el path del archivo bd
+     * Constructor con path de conexion
      * 
-     * @param unaRutaArchivoBD
-     * @throws SQLException
+     * @param unaRutaArchivoBD ruta de la bbdd
+     * @throws SQLException error controlado
      */
-    public ConexionModel(String unaRutaArchivoBD) throws SQLException {
+    protected Conexion(String unaRutaArchivoBD) throws SQLException {
         if (unaRutaArchivoBD == null || unaRutaArchivoBD.isEmpty()) {
-            throw new SQLException("el fichero no existe");
+            throw new SQLException("El fichero es nullo o vacio");
         }
         File file = new File(unaRutaArchivoBD);
         if (!file.exists()) {
-            throw new SQLException("no existe la bbdd: " + unaRutaArchivoBD);
+            throw new SQLException("No exise la bbdd:" + unaRutaArchivoBD);
         }
+
         rutaArchivoBD = unaRutaArchivoBD;
     }
 
-    //geters setters
+    //Getters y Setters
     public String getRutaArchivoBD() {
         return this.rutaArchivoBD;
     }
@@ -45,36 +44,35 @@ public class ConexionModel {
     public Connection getConnection() {
         try {
             if (connection == null) {
-                connection = DriverManager.getConnection("jdb:sqlite:" + rutaArchivoBD);
+                connection = DriverManager.getConnection("jdbc:sqlite:" + rutaArchivoBD);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         return this.connection;
     }
 
     /**
-     * abre la connecion con la base de datos
-     * 
-     * @return Connection
+     * Funcion que abre la conexion a la bbdd
+     * @return
      * @throws SQLException
      */
     public Connection conectar() throws SQLException {
         if (connection == null) {
-            connection = DriverManager.getConnection("jdb:sqlite:" + rutaArchivoBD);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + rutaArchivoBD);
         }
         return connection;
     }
 
     /**
-     * cierra la connecion con la base de datos
-     * 
+     * Funcion que cierra la conexion de bbdd
      * @throws SQLException
      */
     public void cerrar() throws SQLException {
-        if (connection == null) {
-            return;
+        if (connection != null || !connection.isClosed()) {
+            connection.close();
+            connection = null;
         }
-        connection.close();
     }
 }
