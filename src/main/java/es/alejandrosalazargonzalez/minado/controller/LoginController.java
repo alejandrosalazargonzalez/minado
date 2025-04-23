@@ -45,7 +45,6 @@ public class LoginController extends AbstractController {
         idiomas.add("en");
         idiomaComboBox.getItems().addAll(idiomas);
         idiomaComboBox.setValue(cargarIdiomaActual());
-        cambiarIdiomaLogIn();
     }
 
     /**
@@ -110,13 +109,5 @@ public class LoginController extends AbstractController {
         String idioma = idiomaComboBox.getValue().toString();
         setIdioma(idioma);
         cargarIdiomaActual();
-        cambiarIdiomaLogIn();
-    }
-
-    /**
-     * cambiar idioma de la pantalla login
-     */
-    public void cambiarIdiomaLogIn() {
-        usuarioText.setText(ConfigManager.ConfigProperties.getProperty("usuarioText"));
     }
 }

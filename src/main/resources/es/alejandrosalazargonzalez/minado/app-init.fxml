@@ -9,8 +9,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.alejandrosalazargonzalez.minado.controller.LoginController">
   <children>
-    <Text fx:id="usuarioText" layoutX="137.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User/Email:" wrappingWidth="92.7294921875" />
-    <TextField fx:id="userEmailTextField" layoutX="242.0" layoutY="162.0" promptText="User/Email" />
+    <Text fx:id="usuarioText" layoutX="137.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User:" wrappingWidth="92.7294921875" />
+    <TextField fx:id="userEmailTextField" layoutX="242.0" layoutY="162.0" promptText="User" />
     <Text fx:id="passwordText" layoutX="137.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="92.7294921875" />
     <PasswordField fx:id="passwordField" layoutX="242.0" layoutY="208.0" promptText="Password" />
     <Text fx:id="errorText" layoutX="132.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="287.0" />

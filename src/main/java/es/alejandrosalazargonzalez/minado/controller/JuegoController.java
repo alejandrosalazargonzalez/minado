@@ -138,7 +138,9 @@ public class JuegoController extends AbstractController {
 
 
     private void manejarBoton(Button btn, int fila, int columna) {
-        if (descubiertas[fila][columna]) return;
+        if (descubiertas[fila][columna]) {
+            return;
+        }
 
         btn.setDisable(true);
         descubiertas[fila][columna] = true;
@@ -147,7 +149,9 @@ public class JuegoController extends AbstractController {
             btn.setText("X");
             mensajeLabel.setText("¡Perdiste!");
             revelarTodo();
-        } else {
+        } else if (tablero[fila][columna] == 0) {
+            descubrirZonaVacia(fila, columna);
+        }else {
             btn.setText(String.valueOf(tablero[fila][columna])); 
             celdasDescubiertas++;
 
@@ -174,6 +178,56 @@ public class JuegoController extends AbstractController {
             }
         }
     }
+
+    /**
+     * metodo para descubrir la zona vacia
+     * @param fila de la celda
+     * @param columna de la celda
+     */
+    private void descubrirCelda(int fila, int columna) {
+        if (fila < 0 || fila >= FILAS || columna < 0 || columna >= COLUMNAS) return;
+        if (descubiertas[fila][columna]) return;
+    
+        Button btn = (Button) getNodeFromGridPane(fila, columna);
+        btn.setDisable(true);
+        descubiertas[fila][columna] = true;
+    
+        if (tablero[fila][columna] == -1) {
+            btn.setText("X");
+        } else if (tablero[fila][columna] == 0) {
+            btn.setText("");
+        } else {
+            btn.setText(String.valueOf(tablero[fila][columna]));
+        }
+    
+        celdasDescubiertas++;
+    }
+    
+    /**
+     * metodo para descubrir la zona vacia
+     * @param fila de la celda
+     * @param columna de la celda
+     */
+    private void descubrirZonaVacia(int fila, int columna) {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                int nuevaFila = fila + x;
+                int nuevaCol = columna + y;
+    
+                if (nuevaFila >= 0 && nuevaFila < FILAS &&
+                    nuevaCol >= 0 && nuevaCol < COLUMNAS &&
+                    !descubiertas[nuevaFila][nuevaCol]) {
+    
+                    descubrirCelda(nuevaFila, nuevaCol);
+    
+                    if (tablero[nuevaFila][nuevaCol] == 0) {
+                        descubrirZonaVacia(nuevaFila, nuevaCol);
+                    }
+                }
+            }
+        }
+    }
+    
 
     /**
      * metodo para obtener el nodo del gridpane
