@@ -48,11 +48,6 @@ public class RegistrarController extends AbstractController {
     @FXML
     private Text errorText;
 
-    @FXML
-    public void initialize() {
-        cambiarIdiomaRegistrar();
-    }
-
     /**
      * mete al usuario en la bbdd
      */
@@ -131,14 +126,4 @@ public class RegistrarController extends AbstractController {
     private void regresarOnClick() {
         cambiarPantalla(regresarButton, "app-init", "registrar");
     }
-
-    /**
-     * cambiar idioma Registrar
-     */
-    public void cambiarIdiomaRegistrar() {
-
-       
-
-    }
-
 }

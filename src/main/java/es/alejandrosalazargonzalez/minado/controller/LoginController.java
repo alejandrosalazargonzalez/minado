@@ -94,6 +94,9 @@ public class LoginController extends AbstractController {
         cambiarPantalla(registrarButton, "registrar", "app-init");
     }
 
+    /**
+     * cambia a la pantalla recuperar
+     */
     @FXML
     private void loginToRecuperarOnClick(){
         cambiarPantalla(recuperarButton, "recuperar", "app-init");

@@ -1,17 +1,18 @@
 package es.alejandrosalazargonzalez.minado.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
-/**
- * @author alejandrosalazargonzalez
- * @version 1.0.0
- */
 import java.util.Random;
 
 import es.alejandrosalazargonzalez.minado.controller.abstractas.AbstractController;
 
+/**
+ * @author alejandrosalazargonzalez
+ * @version 1.0.0
+ */
 public class JuegoController extends AbstractController {
 
     private static final int FILAS = ConfiguracionPartida.filas;
@@ -106,26 +107,35 @@ public class JuegoController extends AbstractController {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
                 if (tablero[i][j] == -1) continue;
-                int contador = 0;
-
-                for (int x = -1; x <= 1; x++) {
-                    for (int y = -1; y <= 1; y++) {
-                        if (x == 0 && y == 0) continue;
-                        int nuevaFila = i + x;
-                        int nuevaCol = j + y;
-
-                        if (nuevaFila >= 0 && nuevaFila < tablero.length &&
-                            nuevaCol >= 0 && nuevaCol < tablero[0].length &&
-                            tablero[nuevaFila][nuevaCol] == -1) {
-                            contador++;
-                        }
-                    }
-                }
-
-                tablero[i][j] = contador; 
+                tablero[i][j] = contarMinasEnCelda(i, j);
             }
         }
     }
+
+    /**
+     * metodo para contar las minas alrededor de la celda
+     * @param fila de la celda
+     * @param columna de la celda
+     * @return int
+     */
+    private int contarMinasEnCelda(int fila, int columna) {
+        int contador = 0;
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (x == 0 && y == 0) continue;
+                int nuevaFila = fila + x;
+                int nuevaCol = columna + y;
+
+                if (nuevaFila >= 0 && nuevaFila < tablero.length &&
+                    nuevaCol >= 0 && nuevaCol < tablero[0].length &&
+                    tablero[nuevaFila][nuevaCol] == -1) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
+    }
+
 
     private void manejarBoton(Button btn, int fila, int columna) {
         if (descubiertas[fila][columna]) return;
@@ -148,6 +158,9 @@ public class JuegoController extends AbstractController {
         }
     }
 
+    /**
+     * metodo para revelar todas las celdas del tablero
+     */
     private void revelarTodo() {
         for (int i = 0; i < FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
@@ -162,8 +175,14 @@ public class JuegoController extends AbstractController {
         }
     }
 
-    private javafx.scene.Node getNodeFromGridPane(int fila, int columna) {
-        for (javafx.scene.Node node : grid.getChildren()) {
+    /**
+     * metodo para obtener el nodo del gridpane
+     * @param fila de la celda
+     * @param columna de la celda
+     * @return Node
+     */
+    private Node getNodeFromGridPane(int fila, int columna) {
+        for (Node node : grid.getChildren()) {
             if (GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna) {
                 return node;
             }
