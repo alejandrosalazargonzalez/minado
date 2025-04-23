@@ -8,15 +8,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.alejandrosalazargonzalez.minado.controller.InicioController">
    <children>
-      <Text fx:id="minasText" layoutX="144.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="minas:" wrappingWidth="92.7294921875" />
-      <Button fx:id="jugarButton" layoutX="144.0" layoutY="316.0" mnemonicParsing="false" onAction="#inicioToPartidaOnClick" prefHeight="24.0" prefWidth="200.0" text="Jugar" />
-      <Button fx:id="regresarButton" layoutX="144.0" layoutY="384.0" mnemonicParsing="false" onAction="#inicioToLoginOnClick" prefHeight="24.0" prefWidth="200.0" text="Regresar" />
-      <TextField fx:id="minasField" layoutX="235.0" layoutY="209.0" promptText="Numeros de minas" />
-      <ComboBox fx:id="dificultadBox" layoutX="171.0" layoutY="28.0" onAction="#onDificultadChange" prefWidth="150.0" promptText="dificultad" />
-      <Text fx:id="errorText" layoutX="233.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text fx:id="columnasText" layoutX="144.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="columnas:" wrappingWidth="92.7294921875" />
-      <TextField fx:id="columnasField" layoutX="235.0" layoutY="174.0" promptText="Numeros de columnas" />
-      <Text fx:id="filasText" layoutX="144.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="filas:" wrappingWidth="92.7294921875" />
-      <TextField fx:id="filasField" layoutX="235.0" layoutY="135.0" promptText="Numeros de filas" />
+      <Text fx:id="minasText" layoutX="144.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="minas:" wrappingWidth="92.7294921875" />
+      <Button fx:id="jugarButton" layoutX="175.0" layoutY="389.0" mnemonicParsing="false" onAction="#inicioToPartidaOnClick" prefHeight="24.0" prefWidth="200.0" text="Jugar" />
+      <Button fx:id="regresarButton" layoutX="175.0" layoutY="457.0" mnemonicParsing="false" onAction="#inicioToLoginOnClick" prefHeight="24.0" prefWidth="200.0" text="Regresar" />
+      <TextField fx:id="minasField" layoutX="235.0" layoutY="276.0" promptText="Numeros de minas" />
+      <ComboBox fx:id="dificultadBox" layoutX="189.0" layoutY="86.0" onAction="#onDificultadChange" prefWidth="150.0" promptText="dificultad" />
+      <Text fx:id="errorText" layoutX="264.0" layoutY="413.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="columnasText" layoutX="144.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="columnas:" wrappingWidth="92.7294921875" />
+      <TextField fx:id="columnasField" layoutX="235.0" layoutY="241.0" promptText="Numeros de columnas" />
+      <Text fx:id="filasText" layoutX="144.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="filas:" wrappingWidth="92.7294921875" />
+      <TextField fx:id="filasField" layoutX="235.0" layoutY="202.0" promptText="Numeros de filas" />
    </children>
 </AnchorPane>
