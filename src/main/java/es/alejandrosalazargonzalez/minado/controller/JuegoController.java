@@ -39,17 +39,28 @@ public class JuegoController extends AbstractController {
         crearTablero(FILAS, COLUMNAS); 
     }
 
+    /**
+     * inicia una nueca partida con el tablero con los parametros marcados
+     */
     @FXML
     void nuevoJuego() {
         mensajeLabel.setText("Nuevo juego iniciado!");
         crearTablero(FILAS, COLUMNAS);
     }
 
+    /**
+     * cambia a la panalla de configuracion
+     */
     @FXML
     protected void onAtrasClick(){
         cambiarPantalla(atrasButon, "inicio", "play");
     }
 
+    /**
+     * metodo para crear el tablero con las filas y comlumnas marcadas
+     * @param filas del tablero
+     * @param columnas del tablero
+     */
     private void crearTablero(int filas, int columnas) {
         grid.getChildren().clear(); 
         tablero = new int[filas][columnas];
@@ -71,6 +82,10 @@ public class JuegoController extends AbstractController {
         }
     }
 
+    /**
+     * Coloca las minas en el tablero
+     * @param cantidadMinas cantidad de minas a colocar
+     */
     private void colocarMinas(int cantidadMinas) {
         Random random = new Random();
         for (int i = 0; i < cantidadMinas; i++) {
@@ -79,20 +94,23 @@ public class JuegoController extends AbstractController {
             do {
                 fila = random.nextInt(FILAS);
                 col = random.nextInt(COLUMNAS);
-            } while (tablero[fila][col] == -1); 
-            tablero[fila][col] = -1; 
+            } while (tablero[fila][col] == -1);
+            tablero[fila][col] = -1;
         }
     }
 
+    /**
+     * cuenta las minas del tablero
+     */
     private void contarMinasAlrededor() {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
-                if (tablero[i][j] == -1) continue; 
+                if (tablero[i][j] == -1) continue;
                 int contador = 0;
 
                 for (int x = -1; x <= 1; x++) {
                     for (int y = -1; y <= 1; y++) {
-                        if (x == 0 && y == 0) continue; 
+                        if (x == 0 && y == 0) continue;
                         int nuevaFila = i + x;
                         int nuevaCol = j + y;
 
@@ -116,7 +134,7 @@ public class JuegoController extends AbstractController {
         descubiertas[fila][columna] = true;
 
         if (tablero[fila][columna] == -1) {
-            btn.setText("💣"); 
+            btn.setText("X");
             mensajeLabel.setText("¡Perdiste!");
             revelarTodo();
         } else {
@@ -136,7 +154,7 @@ public class JuegoController extends AbstractController {
                 Button btn = (Button) getNodeFromGridPane(i, j);
                 btn.setDisable(true);
                 if (tablero[i][j] == -1) {
-                    btn.setText("💣");
+                    btn.setText("X");
                 } else {
                     btn.setText(String.valueOf(tablero[i][j]));
                 }

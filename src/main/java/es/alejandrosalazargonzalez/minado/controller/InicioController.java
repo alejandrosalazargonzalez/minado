@@ -69,7 +69,6 @@ public class InicioController extends AbstractController {
      */
     @FXML
     private void inicioToPartidaOnClick() {
-
         String seleccion = (String) dificultadBox.getValue();
         int filas = 0;
         int columnas = 0;
@@ -110,15 +109,21 @@ public class InicioController extends AbstractController {
                 mensajeError("Selecciona una dificultad.");
                 return;
         }
-
         ConfiguracionPartida.set(filas, columnas, minas);
         cambiarPantalla(jugarButton, "juego", "app-init");
     }
 
+    /**
+     * setea un mensaje de error
+     * @param mensaje
+     */
     private void mensajeError(String mensaje) {
         errorText.setText(mensaje);
     }
 
+    /**
+     * cambia a la pantalla login
+     */
     @FXML
     private void inicioToLoginOnClick() {
         cambiarPantalla(regresarButton, "app-init", "app-init");

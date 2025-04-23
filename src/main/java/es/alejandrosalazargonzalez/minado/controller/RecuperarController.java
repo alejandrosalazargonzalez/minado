@@ -30,6 +30,16 @@ public class RecuperarController extends AbstractController{
      */
     @FXML
     public void enviarOnClick() {
+        if (emailTextField.getText() == null || emailTextField.getText().isEmpty()) {
+            errorText.setText("no puedes dejar el campo vacio");
+            return;
+        }
+        if (getUsuarioServiceModel().obtenerUsuarioPorEmail(emailTextField.getText()) == null) {
+            errorText.setText("no hay usuarios registrados con ese email");
+            return;
+        }
+        errorText.setText("Su contraseña es: "
+                + getUsuarioServiceModel().obtenerUsuarioPorEmail(emailTextField.getText()).getContrasenia());
     }
     
     /**

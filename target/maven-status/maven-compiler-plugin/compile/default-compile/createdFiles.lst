@@ -1,14 +1,14 @@
 es/alejandrosalazargonzalez/minado/config/ConfigManager$ConfigProperties.class
 es/alejandrosalazargonzalez/minado/PrincipalApplication.class
 es/alejandrosalazargonzalez/minado/model/UsuarioServiceModel.class
-module-info.class
 es/alejandrosalazargonzalez/minado/controller/abstractas/AbstractController.class
+module-info.class
 es/alejandrosalazargonzalez/minado/model/UsuarioEntity.class
 es/alejandrosalazargonzalez/minado/controller/RecuperarController.class
 es/alejandrosalazargonzalez/minado/controller/ConfiguracionPartida.class
 es/alejandrosalazargonzalez/minado/controller/JuegoController.class
-es/alejandrosalazargonzalez/minado/controller/InicioController.class
 es/alejandrosalazargonzalez/minado/config/ConfigManager.class
+es/alejandrosalazargonzalez/minado/controller/InicioController.class
 es/alejandrosalazargonzalez/minado/controller/TituloController.class
 es/alejandrosalazargonzalez/minado/controller/RegistrarController.class
 es/alejandrosalazargonzalez/minado/controller/LoginController.class

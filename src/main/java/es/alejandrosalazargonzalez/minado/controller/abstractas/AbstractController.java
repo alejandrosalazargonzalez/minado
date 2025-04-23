@@ -117,10 +117,10 @@ public abstract class AbstractController {
     public void cambiarPantalla(Button botton, String pantalla, String pantallaAnterior) {
         try {
             this.pantallaAnterior = pantallaAnterior;
-            FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("/view/" +pantalla + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource(pantalla + ".fxml"));
             Stage stage = (Stage) botton.getScene().getWindow();
             Scene scene;
-            scene = new Scene(fxmlLoader.load(), 350, 500);
+            scene = new Scene(fxmlLoader.load(), 550, 600);
             stage.setResizable(false);
             stage.setTitle("Pantalla Princial");
             stage.setScene(scene);
@@ -140,7 +140,7 @@ public abstract class AbstractController {
     public void cambiarPantalla(Hyperlink botton, String pantalla, String pantallaAnterior) {
         try {
             this.pantallaAnterior = pantallaAnterior;
-            FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("/view/" +pantalla + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource(pantalla + ".fxml"));
             Stage stage = (Stage) botton.getScene().getWindow();
             Scene scene;
             scene = new Scene(fxmlLoader.load(), 350, 500);
@@ -162,7 +162,7 @@ public abstract class AbstractController {
     @FXML
     public void cambiarPantalla(Button botton) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("/view/" +pantallaAnterior + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource(pantallaAnterior + ".fxml"));
             Stage stage = (Stage) botton.getScene().getWindow();
             Scene scene;
             scene = new Scene(fxmlLoader.load(), 350, 500);

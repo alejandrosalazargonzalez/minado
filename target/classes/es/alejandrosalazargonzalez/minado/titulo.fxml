@@ -8,9 +8,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.alejandrosalazargonzalez.minado.controller.TituloController">
    <children>
-      <ImageView fitHeight="332.0" fitWidth="617.0" layoutX="52.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="477.0" fitWidth="482.0" layoutX="128.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../img/MINAD.png" />
+            <Image url="@../../../img/MINAD.png" />
          </image>
       </ImageView>
       <Button fx:id="entrarButton" layoutX="313.0" layoutY="400.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#tituloToLoginClick" text="Entrar">
